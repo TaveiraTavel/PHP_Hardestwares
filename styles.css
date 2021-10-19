@@ -1,0 +1,85 @@
+.navbar{
+    margin-bottom: 0;
+}
+
+.navbar div.navbar-content{
+    margin: 15px;
+}
+
+.logo{
+    color: #e07a10;
+    font-family: 'Andale Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 4px;
+}
+
+div#navbar.navbar-collapse.collapse form.navbar-form{
+    margin: 13.5px auto 13.5px 15px;
+}
+
+div#navbar.navbar-collapse.collapse.in form.navbar-form{
+    margin: 5px auto 0 15px;
+}
+
+div#navbar.navbar-collapse.collapsing form.navbar-form{
+    margin: 5px auto 0 15px;
+}
+
+footer{
+    background-color: #333;
+}
+
+footer > p{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    color: #9d9d9d;
+    margin: 6px 15px 0 15px;
+    padding: 4px;
+}
+
+main{
+    background-color: #fafafa;
+}
+
+h5.preco.hardware{
+    font-size: 18px;
+    font-weight: bold;
+    color: #e07a10;
+}
+
+h5.nome.hardware{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 16px;
+    max-height: 32px;
+    -webkit-line-clamp: 1; /* número de linhas para mostrar */
+    -webkit-box-orient: vertical;
+}
+
+button.btn.detalhes{
+    background-color: #454545;
+    border-color: #333;
+}
+
+button.btn.comprar{
+    background-color: #e07a10;
+    border-color: #bf7910;
+}
+
+button.btn.esgotado{
+    background-color: #fafafa;
+    border-color: #bf7910;
+    color: #e07a10;
+}
+
+div.produto span.glyphicon{
+    font-size: 16px;
+    margin-right: 6px;
+}
+
+div.departamento{
+    border-bottom: 4px solid #e07a10;
+    margin: 0 0 18px 12px;
+    width: 290px;
+}
