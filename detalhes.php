@@ -26,14 +26,14 @@
             $codprod = isset($_GET['prod']) ? preg_replace("/[^0-9]/", "", $_GET['prod']) : null;
             
             if (empty($codprod)){
-                include 'notfound.html';
+                include 'erro.html';
             } else {
                 $query = "CALL spConsultaProduto($codprod);";
                 $consulta = $cn -> query($query);
                 $exibe = $consulta -> fetch(PDO::FETCH_ASSOC);
 
                 if (empty($exibe)){
-                    include 'notfound.html';
+                    include 'erro.html';
                 } else {
                     echo '<div class="container-fluid" style="margin: 0 5% 0 5%; padding-bottom: 5%;">';
                     echo    '<div class="row">';

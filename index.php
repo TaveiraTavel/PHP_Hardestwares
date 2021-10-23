@@ -26,13 +26,11 @@
             $depart = isset($_GET['depart'])
                        ? str_replace('_', ' ', $_GET['depart'])
                        : (isset($_GET['busca']) 
-                       ? $_GET['busca'] : 'home');
+                       ? substr($_GET['busca'], 0, 25) : 'home');
             $query = isset($_GET['busca'])
                        ? "CALL spBuscarPor('".addslashes($depart)."');"
-                       : "CALL spConsultaProdsDepart('".substr(addslashes($depart), 0, 25)."');";
+                       : "CALL spConsultaProdsDepart('".addslashes($depart)."');";
             include 'listar_produtos.php';
-        
-        // NAO TA LISTANDO OS PRODUTOS QUANDO TA PESQUISANDO PELA BARRA
         ?> <!-- cabecalho e listar_produtos -->
         
     </main>

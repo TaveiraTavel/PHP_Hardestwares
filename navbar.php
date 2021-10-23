@@ -48,7 +48,7 @@ style="background-color: #333; border-radius:0;">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Pesquisar" 
                             style="border-color: #fff; min-width: 220px;" name="busca" 
-                            value="<?php if(isset($_GET['busca'])){ echo htmlentities($busca); }; ?>"
+                            value="<?php if(isset($_GET['busca'])){ echo htmlentities(substr($busca, 0, 25)); }; ?>"
                             required oninvalid="setCustomValidity('Preencha o campo!')">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="submit" 
