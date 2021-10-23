@@ -89,7 +89,7 @@ style="background-color: #333; border-radius:0;">
                             }
                             else{
                                 if (!empty($_SESSION['privilegio'])){
-                                    echo '<li><a href="painel_administrativo.php"><i class="glyphicon glyphicon-folder-open" style="margin-right: 8px;"></i>Painel Administrativo</a></li>';
+                                    echo '<li><a href="admin.php"><i class="glyphicon glyphicon-folder-open" style="margin-right: 8px;"></i>Painel Administrativo</a></li>';
                                 }
                                 echo '<li><a href="logoff.php"><i class="glyphicon glyphicon-log-out" style="margin-right: 8px;"></i>Logout</a></li>';
                             }
