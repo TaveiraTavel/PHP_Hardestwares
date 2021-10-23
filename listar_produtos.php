@@ -6,12 +6,14 @@
 
         if (isset($consulta))
         {
-            $depart_name =  $depart == 'home' 
-                            ? 'Home'
-                            : ($depart == 'lancamentos' 
-                            ? 'Lançamentos'
-                            : $consulta -> fetch(PDO::FETCH_ASSOC)['Departamento'] ?? null);
-
+            if (!isset($depart_name)){
+                $depart_name =  $depart == 'home' 
+                                ? 'Home'
+                                : ($depart == 'lancamentos' 
+                                ? 'Lançamentos'
+                                : $consulta -> fetch(PDO::FETCH_ASSOC)['Departamento'] ?? null);
+            }
+            
             if (empty($depart_name)){ include 'notfound.html'; return; }
 
             echo '<div class="departamento">';

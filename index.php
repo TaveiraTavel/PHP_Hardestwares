@@ -23,11 +23,16 @@
 
         <?php
             include 'cabecalho.html';
-            $depart = isset($_GET['depart']) ? str_replace('_', ' ', $_GET['depart']) : 'home';
+            $depart = isset($_GET['depart'])
+                       ? str_replace('_', ' ', $_GET['depart'])
+                       : (isset($_GET['busca']) 
+                       ? addslashes($_GET['busca']) : 'home');
             $query = "CALL spConsultaProdsDepart('".substr(addslashes($depart), 0, 25)."');";
             include 'listar_produtos.php';
+        
+        // NAO TA LISTANDO OS PRODUTOS QUANDO TA PESQUISANDO PELA BARRA
         ?> <!-- cabecalho e listar_produtos -->
-
+        
     </main>
 
     <?php include 'rodape.html' ?> <!-- rodape -->

@@ -1,3 +1,7 @@
+<?php 
+    $busca = isset($_GET['busca']) ? addslashes($_GET['busca']) : null;
+    $depart_name = $busca;
+?>
 <nav class="navbar navbar-inverse"
 style="background-color: #333; border-radius:0;">
     <div class="container-fluid navbar-content" style="margin: 0 5% 0 5%;">
@@ -40,10 +44,12 @@ style="background-color: #333; border-radius:0;">
                 
             <!-- Pesquisa -->
                 <li id="pesquisa">
-                    <form class="navbar-form navbar-left" action="/action_page.php">
+                    <form class="navbar-form navbar-left" method="get" action="index.php">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Pesquisar" 
-                            style="border-color: #fff; min-width: 220px;">
+                            style="border-color: #fff; min-width: 220px;" name="busca" 
+                            value="<?php if(isset($_GET['busca'])){ echo htmlentities($busca); }; ?>"
+                            required oninvalid="setCustomValidity('Preencha o campo!')">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="submit" 
                                 style="background-color: #e07a10;">
