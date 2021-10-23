@@ -1,4 +1,5 @@
-<?php
+<?php 
+    session_start();
     if (empty($_SESSION['privilegio'])){
         header('location:index.php');
         return;
@@ -21,7 +22,6 @@
 </head>
 <body>
     <?php 
-        session_start();
         include 'conexao.php';
         include 'navbar.php'
     ?> <!-- conexao e navbar -->   
