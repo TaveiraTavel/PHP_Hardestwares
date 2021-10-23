@@ -28,6 +28,18 @@
 			FROM vwHardware WHERE CodHardware = $codprod;
 	END$$
 
+-- Consultar produto por busca:
+DELIMITER $$
+CREATE PROCEDURE spBuscarPor(
+	in $nome varchar(25)
+)
+BEGIN
+	SELECT CodHardware, Nome, Fabricante, Valor, Departamento, QntEstoque, Imagem
+		FROM vwHardware
+        WHERE Nome LIKE concat('%', $nome,'%')
+		   or Fabricante LIKE concat ('%', $nome, '%');
+END$$
+
 -- Inserir Cliente
 	DELIMITER $$
     CREATE PROCEDURE spInsertUsuario(

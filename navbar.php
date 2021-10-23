@@ -1,5 +1,5 @@
 <?php 
-    $busca = isset($_GET['busca']) ? addslashes($_GET['busca']) : null;
+    $busca = isset($_GET['busca']) ? $_GET['busca'] : null;
     $depart_name = $busca;
 ?>
 <nav class="navbar navbar-inverse"
