@@ -88,7 +88,7 @@ style="background-color: #333; border-radius:0;">
                                 echo '<li><a href="signup.php"><i class="glyphicon glyphicon-pencil" style="margin-right: 8px;"></i>Cadastro</a></li>';
                             }
                             else{
-                                if (!empty($_SESSION['privilegio'])){
+                                if (!empty($_SESSION['privilegio']) && $_SESSION['privilegio'] == true){
                                     echo '<li><a href="admin.php"><i class="glyphicon glyphicon-folder-open" style="margin-right: 8px;"></i>Painel Administrativo</a></li>';
                                 }
                                 echo '<li><a href="logoff.php"><i class="glyphicon glyphicon-log-out" style="margin-right: 8px;"></i>Logout</a></li>';
