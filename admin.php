@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    if (empty($_SESSION['privilegio'])){
+    if (empty($_SESSION['privilegio']) || $_SESSION['privilegio'] != true){
         header('location:index.php');
         return;
     }
