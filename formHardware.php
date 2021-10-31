@@ -54,6 +54,7 @@
         } else {
 			$inputFoto = $_FILES['foto']; 
 			$inputFoto['name'] = 	str_replace(' ', '_', $inputFoto['name']);
+			$destinoFoto = 'img/hardwares/';
 		}
 
 		if (empty($_POST['lanc']) || ($_POST['lanc'] != 1 && $_POST['lanc'] != 0)){
@@ -62,10 +63,21 @@
 
 		if (empty($mensagens))
         {
-			preg_match("/\.(jpg|jpeg|png|gif){1}$/i", $inputFoto['name'], $extencao);
+			try{
+				preg_match("/\.(jpg|jpeg|png|gif){1}$/i", $inputFoto['name'], $extencao);
 
-			$inserir = $cn -> query("CALL spInsertHardware('$inputNome', $inputDepart, $inputFabric, $inputPreco, 
-			'$inputEspec', $inputQnt, $inputLanc, '".$inputFoto['name']."');");
+				$inserir = $cn -> query("CALL spInsertHardware('$inputNome', $inputDepart, $inputFabric, $inputPreco, 
+				'$inputEspec', $inputQnt, $inputLanc, '".$inputFoto['name']."');");
+
+				move_uploaded_file($inputFoto['tmp_name'], $destinoFoto.$inputFoto['name']);             
+				$resizeObj = new resize($destinoFoto.$inputFoto['name']);
+				$resizeObj -> resizeImage(300, 300, 'crop');
+				$resizeObj -> saveImage($destinoFoto.$inputFoto['name'], 100);
+			} catch(PDOException $e) {
+				echo $e -> getMessage();
+			} finally {
+				header('Location:index.php');
+			}
         }
 	}
 ?> 
