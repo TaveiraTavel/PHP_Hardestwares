@@ -76,3 +76,22 @@ END$$
         
         INSERT INTO tbUsuario VALUES (default, $Nome, $Email, $Senha, $Privilegio, $NumEndereco, $Cep);
     END$$
+
+-- Inserir Hardware
+	DELIMITER $$
+    CREATE PROCEDURE spInsertHardware(
+		in $Nome varchar(130),
+        in $CodDepart int,
+        in $CodFabric int,
+        in $Valor decimal(7, 2),
+        in $Espec  varchar(255),
+        in $Qnt int,
+        in $Lanc tinyint(1),
+        in $Imagem  varchar(30)
+    )
+    BEGIN
+		INSERT INTO tbHardware (CodDepartamento, Nome, CodDepartamento, CodFabricante, 
+								Valor, Especificacoes, QntEstoque, Lancamento, Imagem)
+			VALUES (default, $Nome, $CodDepart, $CodFabric,
+					$Valor, $Espec, $Qnt, $Lanc, $Imagem);
+    END$$

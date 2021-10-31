@@ -35,13 +35,13 @@
 		<div class="row">
             <div class="col-sm-4 col-sm-offset-4 text-center">
 				<h2>Área administrativa</h2>	
-                <button type="submit" class="btn btn-block btn-lg btn-primary">
-                    Incluir Produto</button>
-				<button type="submit" class="btn btn-block btn-lg btn-warning">
+                <a href="./formHardware.php"><button type="submit" class="btn btn-block btn-lg btn-primary">
+                    Incluir Produto</button></a>
+                <a href=""><button type="submit" class="btn btn-block btn-lg btn-warning">
 					Alterar / Excluir Produto</button>
-				<button type="submit" class="btn btn-block btn-lg btn-success">
+                <a href=""><button type="submit" class="btn btn-block btn-lg btn-success">
 					Vendas</button>
-				<button type="submit" class="btn btn-block btn-lg btn-danger">
+                <a href=""><button type="submit" class="btn btn-block btn-lg btn-danger">
 					Sair da àrea administrativa</button>
 			</div>
 		</div>

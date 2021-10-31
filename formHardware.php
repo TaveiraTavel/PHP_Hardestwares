@@ -5,9 +5,70 @@
         return;
     }
 
-	//$consultaFabric -> $cn -> query("SELECT * FROM tbFabricante");
-	//$consultaDepart -> $cn -> query("SELECT * FROM tbDepartamento");
-?>
+	include 'conexao.php';
+
+	$consultaFabric = $cn -> query("SELECT * FROM tbFabricante ORDER BY Nome;");
+	$consultaDepart = $cn -> query("SELECT * FROM tbDepartamento ORDER BY Nome;");
+
+	if (isset($_POST['enviar'])){
+        $mensagens = [];
+
+		if (empty($_POST['depart'])){
+            array_push($mensagens, 'Selecione um departamento.');
+        } else { $inputDepart = $_POST['depart']; }
+
+		if (empty($_POST['nome']) || strlen(trim($_POST['nome'])) > 130 || ctype_space($_POST['nome'])){
+            array_push($mensagens, 'O nome deve ter até 130 caracteres alfanuméricos.');
+        } else { $inputNome = htmlentities($_POST['nome']); }
+		
+		if (empty($_POST['fabric'])){
+            array_push($mensagens, 'Selecione uma fabricante.');
+        } else { $inputFabric = $_POST['fabric']; }
+		
+		if (empty($_POST['espec']) || strlen(trim($_POST['espec'])) > 255 || ctype_space($_POST['espec'])){
+			array_push($mensagens, 'Insira alguma(s) especificação(ões).');
+		} else { 
+			$inputEspec = 	str_replace(
+							',""', '',
+							str_replace(
+								';', '","',
+								str_replace(
+									':', '":"',
+									'{"'.htmlspecialchars($_POST['espec']).'"}'
+									)
+								)
+							);
+		
+		}
+
+		if (empty($_POST['preco'])){
+            array_push($mensagens, 'Insira um preço.');
+        } else { $inputPreco = str_replace(',', '.',str_replace('.', '',$_POST['preco'])); }
+		
+		if (empty($_POST['qnt']) || $_POST['qnt'] < 1){
+            array_push($mensagens, 'Insira uma quantidade válida.');
+        } else { $inputQnt = $_POST['qnt']; }
+
+		if (empty($_FILES['foto'])){
+            array_push($mensagens, 'Carregue uma imagem para o produto.');
+        } else {
+			$inputFoto = $_FILES['foto']; 
+			$inputFoto['name'] = 	str_replace(' ', '_', $inputFoto['name']);
+		}
+
+		if (empty($_POST['lanc']) || ($_POST['lanc'] != 1 && $_POST['lanc'] != 0)){
+            array_push($mensagens, 'Informe se o produto é lançamento.');
+        } else { $inputLanc = $_POST['lanc']; }
+
+		if (empty($mensagens))
+        {
+			preg_match("/\.(jpg|jpeg|png|gif){1}$/i", $inputFoto['name'], $extencao);
+
+			$inserir = $cn -> query("CALL spInsertHardware('$inputNome', $inputDepart, $inputFabric, $inputPreco, 
+			'$inputEspec', $inputQnt, $inputLanc, '".$inputFoto['name']."');");
+        }
+	}
+?> 
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -25,7 +86,6 @@
 </head>
 <body>
     <?php 
-        include 'conexao.php';
         include 'navbar.php'
     ?> <!-- conexao e navbar -->   
 
@@ -38,55 +98,64 @@
 		<div class="row">
 			<div class="col-sm-4 col-sm-offset-4">
 				<h2>Inclusão de Produtos</h2>
-				<form method="post" action="insprod.php" name="incluiProd" enctype="multipart/form-data">
+				<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="incluiProd" enctype="multipart/form-data">
 					<div class="form-group">
-						<label for="sltdepart">Departamento</label>
-						<select name="sltdepart" class="form-control">
+						<label for="depart">Departamento</label>
+						<select name="depart" class="form-control">
 							<option value="">Selecione</option>
-							<option value=""></option>					
+							<?php 
+								while ($departamento = $consultaDepart -> fetch(PDO::FETCH_ASSOC)){
+									echo '<option value="'.$departamento['CodDepartamento'].'">'.$departamento['Nome'].'</option>';
+								}
+							?>				
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="txthardware">Nome do Hardware</label>
-						<input name="txthardware" type="text" class="form-control" required id="txtlivro">
+						<label for="nome">Nome do Hardware</label>
+						<input name="nome" type="text" class="form-control" id="txtlivro">
 					</div>
 					<div class="form-group">
-						<label for="sltfabric">Fabricante</label>
-						<select name="sltfabric" class="form-control">
+						<label for="fabric">Fabricante</label>
+						<select name="fabric" class="form-control">
 							<option value="">Selecione</option>
-							<option value=""></option>
+							<?php 
+								while ($fabricante = $consultaFabric -> fetch(PDO::FETCH_ASSOC)){
+									echo '<option value="'.$fabricante['CodFabricante'].'">'.$fabricante['Nome'].'</option>';
+								}
+							?>
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="txtespec">Especificações</label>
-						<textarea name="txtespec" rows="5" class="form-control"
+						<label for="espec">Especificações</label>
+						<textarea name="espec" rows="5" class="form-control"
 						placeholder="especificação:valor;
 						especificação:valor; ..."></textarea>
 					</div>
 					<div class="form-group">
-						<label for="txtpreco">Preço</label>
-						<input name="txtpreco" type="text" class="form-control" required id="txtpreco">
+						<label for="preco">Preço</label>
+						<input name="preco" type="text" class="form-control" id="txtpreco">
 					</div>
 					<div class="form-group">
-						<label for="txtqtde">Quantidade em Estoque</label>
-						<input name="txtqtde" type="number" class="form-control" required id="txtqtde">
+						<label for="qnt">Quantidade em Estoque</label>
+						<input name="qnt" type="number" class="form-control" id="txtqtde">
 					</div>
 					<div class="form-group">
-						<label for="txtfoto1">Foto Principal</label>
-						<input name="txtfoto1" type="file" accept="image/*" class="form-control" required id="txtfoto1">
+						<label for="foto">Foto Principal</label>
+						<input name="foto" type="file" accept="image/*" class="form-control" id="txtfoto1">
 					</div>
 					<div class="form-group">
-						<label for="sltlanc">Lançamento?</label>
-						<select class="form-control" name="sltlanc">
+						<label for="lanc">Lançamento?</label>
+						<select name="lanc" class="form-control">
 							<option value="">Selecione</option>
-							<option value="true">Sim</option>
-							<option value="false">Não</option>					  
+							<option value="1">Sim</option>
+							<option value="0">Não</option>					  
 						</select>
 					</div>
-					<button type="submit" class="btn btn-lg btn-default">
+					<button name="enviar" type="submit" class="btn btn-lg btn-default">
 						<span class="glyphicon glyphicon-pencil"> Cadastrar </span>
 					</button>
 				</form>
+				<?php if(isset($_POST['nome'])){ foreach($mensagens as $mensagem){ echo $mensagem.'<br />'; } } ?>
 			</div>
 		</div>
 

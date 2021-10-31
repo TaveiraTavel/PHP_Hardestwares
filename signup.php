@@ -18,8 +18,8 @@
             array_push($mensagens, 'O endereço deve ter até 150 caracteres e conter apenas letras.');
         } else { $inputEndereco = $_POST['endereco']; }
 
-        if (empty($_POST['numero']) || strlen(trim($_POST['numero'])) > 5){
-            array_push($mensagens, 'O número do endereço deve ter até 5 casas.');
+        if (empty($_POST['numero']) || strlen(trim($_POST['numero'])) > 5 || $_POST['numero'] < 1){
+            array_push($mensagens, 'O número do endereço deve ter até 5 casas e ser positivo.');
         } else { $inputNumero = $_POST['numero']; }
 
         if (empty($_POST['cep']) || strlen(trim($_POST['cep'])) != 9){
