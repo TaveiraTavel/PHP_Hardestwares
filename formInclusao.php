@@ -57,9 +57,10 @@
 			$destinoFoto = 'img/hardwares/';
 		}
 
-		if (empty($_POST['lanc']) || ($_POST['lanc'] != 1 && $_POST['lanc'] != 0)){
+		if (empty($_POST['lanc']) || ($_POST['lanc'] != 'S' && $_POST['lanc'] != 'N')){
             array_push($mensagens, 'Informe se o produto é lançamento.');
-        } else { $inputLanc = $_POST['lanc']; }
+        } else { $inputLanc = $_POST['lanc'] == 'S' ? 
+								1 : 0; }
 
 		if (empty($mensagens))
         {

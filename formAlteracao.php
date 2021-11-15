@@ -62,9 +62,10 @@
 			$destinoFoto = 'img/hardwares/';
 		}
 
-		if (empty($_POST['lanc']) || ($_POST['lanc'] != 1 && $_POST['lanc'] != 0)){
+		if (empty($_POST['lanc']) || ($_POST['lanc'] != 'S' && $_POST['lanc'] != 'N')){
             array_push($mensagens, 'Informe se o produto é lançamento.');
-        } else { $inputLanc = $_POST['lanc']; }
+        } else { $inputLanc = $_POST['lanc'] == 'S' ? 
+								1 : 0; }
 
 		if (empty($mensagens))
         {
@@ -104,8 +105,7 @@
 </head>
 <body>
     <?php 
-        include 'navbar.php';
-		echo $_POST['lanc'];
+        include 'navbar.php'
     ?> <!-- conexao e navbar -->   
 
     <main id="main">
@@ -211,8 +211,8 @@
 					<div class="form-group">
 						<label for="lanc">Lançamento?</label>
 						<select name="lanc" class="form-control">
-							<option value="1" <?php if ($dadosHardware['Lancamento']){ echo 'selected'; } ?> >Sim</option>
-							<option value="0" <?php if (!$dadosHardware['Lancamento']){ echo 'selected'; } ?> >Não</option>					  
+							<option value="S" <?php if ($dadosHardware['Lancamento']){ echo 'selected'; } ?> >Sim</option>
+							<option value="N" <?php if (!$dadosHardware['Lancamento']){ echo 'selected'; } ?> >Não</option>					  
 						</select>
 					</div>
 					<button name="enviar" type="submit" class="btn btn-lg btn-default">
