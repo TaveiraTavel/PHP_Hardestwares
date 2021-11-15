@@ -90,8 +90,35 @@ END$$
         in $Imagem  varchar(30)
     )
     BEGIN
-		INSERT INTO tbHardware (CodDepartamento, Nome, CodDepartamento, CodFabricante, 
+		INSERT INTO tbHardware (CodHardware, Nome, CodDepartamento, CodFabricante, 
 								Valor, Especificacoes, QntEstoque, Lancamento, Imagem)
 			VALUES (default, $Nome, $CodDepart, $CodFabric,
 					$Valor, $Espec, $Qnt, $Lanc, $Imagem);
+    END$$
+    
+-- Atualizar Hardware
+	DELIMITER $$
+    CREATE PROCEDURE spUpdateHardware(
+		in $CodHardware int,
+		in $Nome varchar(130),
+        in $CodDepart int,
+        in $CodFabric int,
+        in $Valor decimal(7, 2),
+        in $Espec  varchar(255),
+        in $Qnt int,
+        in $Lanc tinyint(1),
+        in $Imagem  varchar(30)
+    )
+    BEGIN
+		UPDATE tbHardware 
+			SET CodDepartamento = 2,
+				Nome = $Nome,
+				CodDepartamento = $CodDepart,
+				CodFabricante = $CodFabric,
+				Valor = $Valor,
+				Especificacoes = $Espec,
+				QntEstoque = $Qnt,
+				Lancamento = $Lanc,
+				Imagem = $Imagem
+            WHERE CodHardware = $CodHardware
     END$$

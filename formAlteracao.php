@@ -24,7 +24,7 @@
 
 		if (empty($_POST['nome']) || strlen(trim($_POST['nome'])) > 130 || ctype_space($_POST['nome'])){
             array_push($mensagens, 'O nome deve ter até 130 caracteres alfanuméricos.');
-        } else { $inputNome = htmlentities($_POST['nome']); }
+        } else { $inputNome = htmlspecialchars($_POST['nome']); }
 		
 		if (empty($_POST['fabric'])){
             array_push($mensagens, 'Selecione uma fabricante.');
@@ -33,13 +33,16 @@
 		if (empty($_POST['espec']) || strlen(trim($_POST['espec'])) > 255 || ctype_space($_POST['espec'])){
 			array_push($mensagens, 'Insira alguma(s) especificação(ões).');
 		} else { 
-			$inputEspec = 	str_replace(
-							',""', '',
-							str_replace(
-								';', '","',
+			$inputEspec =	preg_replace(
+								'/\r\n/', '',
 								str_replace(
-									':', '":"',
-									'{"'.htmlspecialchars($_POST['espec']).'"}'
+									',""', '',
+									str_replace(
+										';', '","',
+										str_replace(
+											':', '":"',
+											'{"'.htmlspecialchars($_POST['espec']).'"}'
+										)
 									)
 								)
 							);
@@ -50,16 +53,14 @@
             array_push($mensagens, 'Insira um preço.');
         } else { $inputPreco = str_replace(',', '.',str_replace('.', '',$_POST['preco'])); }
 		
-		if (empty($_POST['qnt']) || $_POST['qnt'] < 1){
+		if (empty($_POST['qnt']) || $_POST['qnt'] < -1){
             array_push($mensagens, 'Insira uma quantidade válida.');
         } else { $inputQnt = $_POST['qnt']; }
 
 		if (empty($_FILES['foto'])){
             array_push($mensagens, 'Carregue uma imagem para o produto.');
         } else {
-			$inputFoto = $_FILES['foto']; 
-			$inputFoto['name'] = str_replace(' ', '_', $inputFoto['name']);
-			$destinoFoto = 'img/hardwares/';
+			$inputFoto = $_FILES['foto'];
 		}
 
 		if (empty($_POST['lanc']) || ($_POST['lanc'] != 'S' && $_POST['lanc'] != 'N')){
@@ -69,22 +70,29 @@
 
 		if (empty($mensagens))
         {
-			echo 'UPDATE';
-			/*try{
+			try{
 				preg_match("/\.(jpg|jpeg|png|gif){1}$/i", $inputFoto['name'], $extencao);
 
-				$inserir = $cn -> query("CALL spInsertHardware('$inputNome', $inputDepart, $inputFabric, $inputPreco, 
+				if (!empty($inputFoto['name'])){
+					$inputFoto['name'] = str_replace(' ', '_', $inputFoto['name']);
+					$destinoFoto = 'img/hardwares/';
+
+					move_uploaded_file($inputFoto['tmp_name'], $destinoFoto.$inputFoto['name']);             
+					$resizeObj = new resize($destinoFoto.$inputFoto['name']);
+					$resizeObj -> resizeImage(300, 300, 'crop');
+					$resizeObj -> saveImage($destinoFoto.$inputFoto['name'], 100);
+				} else {
+					$inputFoto['name'] = $dadosHardware['Imagem'];
+				}
+
+				$inserir = $cn -> query("CALL spUpdateHardware($codHardware,'$inputNome', $inputDepart, $inputFabric, $inputPreco, 
 				'$inputEspec', $inputQnt, $inputLanc, '".$inputFoto['name']."');");
 
-				move_uploaded_file($inputFoto['tmp_name'], $destinoFoto.$inputFoto['name']);             
-				$resizeObj = new resize($destinoFoto.$inputFoto['name']);
-				$resizeObj -> resizeImage(300, 300, 'crop');
-				$resizeObj -> saveImage($destinoFoto.$inputFoto['name'], 100);
 			} catch(PDOException $e) {
 				echo $e -> getMessage();
 			} finally {
 				header('Location:index.php');
-			}*/
+			}
         }
 	}
 ?> 
@@ -156,42 +164,22 @@
 					</div>
 					<div class="form-group">
 						<label for="espec">Especificações</label>
-						<textarea name="espec" rows="5" class="form-control">
-							<?php echo 	str_replace(
-											'; ', ';&#013;',
+						<?php echo 	'<textarea name="espec" rows="5" class="form-control">'
+							 		.str_replace(
+										'"', '',
+										str_replace(
+											'",', ';&#013;',
 											str_replace(
-												'"', '',
+												'}', '',
 												str_replace(
-													'",', ';',
-													str_replace(
-														'}', '',
-														str_replace(
-															'{', '',
-															preg_replace(
-																'/[ ]{2,}|[\t]/', 'aaa',
-																preg_replace(
-																	'/[\r\n\v\f\t]+/', '&#013;',
-																	preg_replace(
-																		'/( )+/', ' ',
-																		preg_replace(
-																			'/\v+/', '',
-																			trim(str_replace(
-																				'&tab;', '', 
-																				$dadosHardware['Especificacoes']
-																			))
-																		)
-																	)
-																)
-															)
-														)
-													)
+													'{', '',
+													$dadosHardware['Especificacoes']
 												)
 											)
-										);
-										
-										
-							?>
-						</textarea>
+										)
+									).
+									'</textarea>';
+						?>
 					</div>
 					<div class="form-group">
 						<label for="preco">Preço</label>
