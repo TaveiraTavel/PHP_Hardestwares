@@ -55,16 +55,32 @@
                     echo            '</ul>';
                     echo            '<h4 style="font-weight: bold; font-size: 24px;">R$ '.number_format($exibe['Valor'], 2, ',', '.').'</h4>';
                     
-                    if ($exibe['QntEstoque'] > 0)
-                    {
-                    echo            '<button class="btn btn-lg btn-block btn-danger comprar" style="background-color: #e07a10; border-color: #bf7910; margin: 5px 0 15px 0;">';
-                    echo                '<span class="glyphicon glyphicon-usd comprar"></span>Comprar';
-                    }
+                    if (!empty($_SESSION['privilegio'])){
+                        if ($_SESSION['privilegio'] == true){
+                            echo    '<a href="formAlteracao.php?id='.$exibe['CodHardware'].'">';
+                            echo        '<button class="btn btn-lg btn-block btn-danger comprar" style="background-color: #e07a10; border-color: #bf7910; margin: 5px 0 15px 0;">';
+                            echo            '<span class="glyphicon glyphicon-pencil esgotado"></span> Alterar</button>';
+                            echo    '</a>';
+                        
+                            echo    '<a href="formExclusao.php?id='.$exibe['CodHardware'].'">';
+                            echo        '<button class="btn btn-lg btn-block btn-danger esgotado" style="background-color: #fafafa; border-color: #bf7910; color: #e07a10; margin: 5px 0 15px 0;">';
+                            echo            '<span class="glyphicon glyphicon-remove esgotado"></span> Excluir</button>';
+                            echo    '</a>';
+                        }
+                    } else {
+                        if ($exibe['QntEstoque'] > 0)
+                        {
+                        echo            '<button class="btn btn-lg btn-block btn-danger comprar" style="background-color: #e07a10; border-color: #bf7910; margin: 5px 0 15px 0;">';
+                        echo                '<span class="glyphicon glyphicon-usd comprar"></span> Comprar';
+                        }
+        
+                        else
+                        {
+                        echo            '<button class="btn btn-lg btn-block btn-danger esgotado" style="background-color: #fafafa; border-color: #bf7910; color: #e07a10; margin: 5px 0 15px 0;">';
+                        echo                '<span class="glyphicon glyphicon-remove-circle esgotado"></span> Esgotado';
+                        }
     
-                    else
-                    {
-                    echo            '<button class="btn btn-lg btn-block btn-danger esgotado" style="background-color: #fafafa; border-color: #bf7910; color: #e07a10; margin: 5px 0 15px 0;">';
-                    echo                '<span class="glyphicon glyphicon-remove-circle esgotado"></span>Esgotado';
+                        echo            '</button>';
                     }
 
                     echo        '</div>';

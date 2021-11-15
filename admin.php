@@ -35,9 +35,9 @@
 		<div class="row">
             <div class="col-sm-4 col-sm-offset-4 text-center">
 				<h2>Área administrativa</h2>	
-                <a href="./formHardware.php"><button type="submit" class="btn btn-block btn-lg btn-primary">
+                <a href="./formInclusao.php"><button type="submit" class="btn btn-block btn-lg btn-primary">
                     Incluir Produto</button></a>
-                <a href=""><button type="submit" class="btn btn-block btn-lg btn-warning">
+                <a href="./listaProdutos.php"><button type="submit" class="btn btn-block btn-lg btn-warning">
 					Alterar / Excluir Produto</button>
                 <a href=""><button type="submit" class="btn btn-block btn-lg btn-success">
 					Vendas</button>
