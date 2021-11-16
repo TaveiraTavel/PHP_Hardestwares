@@ -7,7 +7,7 @@
 
 	include 'conexao.php';
 
-	$codHardware = (int) $_GET['id'];
+	$codHardware = isset($_GET['id']) ? (int) $_GET['id'] : 2;
 
 	$consultaFabric = $cn -> query("SELECT * FROM tbFabricante ORDER BY Nome;");
 	$consultaDepart = $cn -> query("SELECT * FROM tbDepartamento ORDER BY Nome;");
@@ -86,7 +86,7 @@
 			} catch(PDOException $e) {
 				echo $e -> getMessage();
 			} finally {
-				
+
 				$inserir = $cn -> query("CALL spUpdateHardware($codHardware,'$inputNome', $inputDepart, $inputFabric, $inputPreco, 
 				'$inputEspec', $inputQnt, $inputLanc, '".$inputFoto['name']."');");
 
