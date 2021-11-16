@@ -71,9 +71,8 @@
 		if (empty($mensagens))
         {
 			try{
-				preg_match("/\.(jpg|jpeg|png|gif){1}$/i", $inputFoto['name'], $extencao);
-
 				if (!empty($inputFoto['name'])){
+					preg_match("/\.(jpg|jpeg|png|gif){1}$/i", $inputFoto['name'], $extencao);
 					$inputFoto['name'] = str_replace(' ', '_', $inputFoto['name']);
 					$destinoFoto = 'img/hardwares/';
 
@@ -84,14 +83,14 @@
 				} else {
 					$inputFoto['name'] = $dadosHardware['Imagem'];
 				}
-
-				$inserir = $cn -> query("CALL spUpdateHardware($codHardware,'$inputNome', $inputDepart, $inputFabric, $inputPreco, 
-				'$inputEspec', $inputQnt, $inputLanc, '".$inputFoto['name']."');");
-
 			} catch(PDOException $e) {
 				echo $e -> getMessage();
 			} finally {
-				header('Location:index.php');
+				
+				$inserir = $cn -> query("CALL spUpdateHardware($codHardware,'$inputNome', $inputDepart, $inputFabric, $inputPreco, 
+				'$inputEspec', $inputQnt, $inputLanc, '".$inputFoto['name']."');");
+
+				header('Location:detalhes.php?prod='.$dadosHardware['CodHardware']);
 			}
         }
 	}

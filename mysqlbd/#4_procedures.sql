@@ -104,10 +104,10 @@ END$$
         in $CodDepart int,
         in $CodFabric int,
         in $Valor decimal(7, 2),
-        in $Espec  varchar(255),
+        in $Espec varchar(255),
         in $Qnt int,
         in $Lanc tinyint(1),
-        in $Imagem  varchar(30)
+        in $Imagem varchar(30)
     )
     BEGIN
 		UPDATE tbHardware 
@@ -120,5 +120,5 @@ END$$
 				QntEstoque = $Qnt,
 				Lancamento = $Lanc,
 				Imagem = $Imagem
-            WHERE CodHardware = $CodHardware
+            WHERE CodHardware = $CodHardware;
     END$$
