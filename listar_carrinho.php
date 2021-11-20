@@ -35,7 +35,7 @@
         echo    '<h4>'.$qntd.'</h4>';
         echo '</div>';
         echo '<div minwidth="12px" class="col-sm-2 col-sm-offset-right-1" style="padding-top:20px">';
-        echo    '<a href="removerItem.php?prod='.$codprod.'">';
+        echo    '<a href="removerItem.php?prod='.$codItem.'">';
         echo        '<button class="btn btn-lg btn-block btn-danger">';
         echo            '<span class="glyphicon glyphicon-remove"></span>';
         echo        '</button>';
