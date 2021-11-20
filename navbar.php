@@ -97,7 +97,7 @@ style="background-color: #333; border-radius:0;">
                         
                         
                         <hr style="margin: 8px;">
-                        <li><a href="#"><i class="glyphicon glyphicon-shopping-cart" style="margin-right: 8px;"></i>Carrinho</a></li>
+                        <li><a href="carrinho.php"><i class="glyphicon glyphicon-shopping-cart" style="margin-right: 8px;"></i>Carrinho</a></li>
                     </ul>
                 </li>
             </ul>

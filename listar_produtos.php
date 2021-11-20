@@ -40,23 +40,25 @@
                     echo    '<div class="text-center">';
                     echo        '<a href="detalhes.php?prod='.$exibe['CodHardware'].'">';
                     echo            '<button class="btn btn-lg btn-block btn-info detalhes">';
-                    echo                '<span class="glyphicon glyphicon-info-sign detalhes"></span>Detalhes';
+                    echo                '<span class="glyphicon glyphicon-info-sign detalhes"></span> Detalhes';
                     echo            '</button>';
                     echo        '</a>';
                     
                     if ($exibe['QntEstoque'] > 0)
                     {
-                        echo    '<button class="btn btn-lg btn-block btn-danger comprar" style="margin: 5px 0 15px 0;">';
-                        echo        '<span class="glyphicon glyphicon-usd comprar"></span>Comprar';
+                        echo        '<a href="carrinho.php?prod='.$exibe['CodHardware'].'">';
+                        echo            '<button class="btn btn-lg btn-block btn-danger comprar" style="margin: 5px 0 15px 0;">';
+                        echo                '<span class="glyphicon glyphicon-usd comprar"></span> Comprar';
+                        echo            '</button>';
+                        echo        '</a>';
                     }
 
                     else
                     {
                         echo    '<button class="btn btn-lg btn-block btn-danger esgotado" style="background-color: #fafafa; border-color: #bf7910; color: #e07a10; margin: 5px 0 15px 0;">';
-                        echo        '<span class="glyphicon glyphicon-remove-circle esgotado"></span>Esgotado';
+                        echo        '<span class="glyphicon glyphicon-remove-circle esgotado"></span> Esgotado';
+                        echo    '</button>';
                     }
-
-                    echo        '</button>';
                     echo    '</div>';
                     echo '</div>';
                 }
